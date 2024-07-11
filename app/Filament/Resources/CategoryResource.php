@@ -49,18 +49,15 @@ class CategoryResource extends Resource
                                 ->required()
                                 ->dehydrated()
                                 ->unique(Category::class, 'slug', ignoreRecord: true)
-                        ])
+                        ]),
+                    FileUpload::make('image')
+                        ->image()
+                        ->directory('categories'),
+
+                    Toggle::make('is_active')
+                        ->required()
+                        ->default(true)
                 ]),
-
-                FileUpload::make('image')
-                    ->image()
-                    ->directory('categories'),
-
-                Toggle::make('is_active')
-                    ->required()
-                    ->default(true)
-
-
             ]);
     }
 

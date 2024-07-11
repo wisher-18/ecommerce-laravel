@@ -46,16 +46,18 @@ class BrandResource extends Resource
                                 ->required()
                                 ->dehydrated()
                                 ->unique(Category::class, 'slug', ignoreRecord: true)
-                        ])
+                        ]),
+
+                    FileUpload::make('image')
+                        ->image()
+                        ->directory('brands'),
+
+                    Toggle::make('is_active')
+                        ->required()
+                        ->default(true)
                 ]),
 
-                FileUpload::make('image')
-                    ->image()
-                    ->directory('brands'),
 
-                Toggle::make('is_active')
-                    ->required()
-                    ->default(true)
             ]);
     }
 
