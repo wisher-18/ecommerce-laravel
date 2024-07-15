@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers\OrdersRelationManager;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -28,8 +29,8 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-            
-            
+
+
                 Forms\Components\TextInput::make('email')
                     ->label('Email Address')
                     ->email()
@@ -40,15 +41,15 @@ class UserResource extends Resource
                 Forms\Components\DateTimePicker::make('email_verified_at')
                 ->label("Email Verified At")
                 ->default(now()),
-            
+
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->dehydrated(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
-                
+
             ]);
 
-                
-                
+
+
     }
 
     public static function table(Table $table): Table
@@ -87,7 +88,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrdersRelationManager::class
         ];
     }
 

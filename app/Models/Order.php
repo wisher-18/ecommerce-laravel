@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'grand_totol',
+        'grand_total',
         'payment_method',
         'payment_status',
         'status',
@@ -21,15 +21,18 @@ class Order extends Model
         'notes'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function items(){
+    public function items()
+    {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function address(){
+    public function address()
+    {
         return $this->hasOne(Address::class);
     }
 }
