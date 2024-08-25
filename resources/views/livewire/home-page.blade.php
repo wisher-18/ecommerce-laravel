@@ -8,7 +8,7 @@
                 <div>
                     <h1
                         class="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">
-                        Start your journey with <span class="text-blue-600">DCodeMania</span></h1>
+                        Start your journey with <span class="text-blue-600">Evo Guru</span></h1>
                     <p class="mt-3 text-lg text-gray-800 dark:text-gray-400">Purchase wide varities of electronics
                         products like Smartphones, Laptops, Smartwatches, Television and many more.</p>
 
@@ -226,12 +226,12 @@
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-2">
                 @foreach($brands as $brand)
                 <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key='{{$brand->id}}'>
-                    <a href="" class="">
+                    <a href="/products?selected_brands[0]={{$brand->id}}" class="">
                         <img src="{{ url('storage', $brand->image)}}" alt="{{$brand->name}}"
                             class="object-cover w-full h-64 rounded-t-lg">
                     </a>
                     <div class="p-5 text-center">
-                        <a href="" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
+                        <a href="/products?selected_brands[0]={{$brand->id}}" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
                             {{$brand->name}}
                         </a>
                     </div>
@@ -274,7 +274,7 @@
             <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6">
                 @foreach($categories as $category)
                 <a class="flex flex-col transition bg-white border shadow-sm group rounded-xl hover:shadow-md dark:bg-slate-900 dark:border-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="#" wire:key='{{$category->id}}'>
+                    href="/products?selected_categories[0]={{$category->id}}" wire:key='{{$category->id}}'>
                     <div class="p-4 md:p-5">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
