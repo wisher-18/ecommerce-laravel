@@ -7,8 +7,45 @@ use Illuminate\Support\Facades\Cookie;
 
 class CartManagement {
 
-    //add item to cart
-    static public function addItemToCart($product_id){
+    static public function addItemToCart($product_id) {
+        $cart_items = self::getCartItemsFromCookie();
+        $existing_item = null;
+
+        // Check if product exists
+        $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
+        if (!$product) {
+            return false; // Handle product not found
+        }
+
+        foreach ($cart_items as $key => $item) {
+            if ($item['product_id'] == $product_id) {
+                $existing_item = $key;
+                break;
+            }
+        }
+
+        if ($existing_item !== null) {
+            $cart_items[$existing_item]['quantity']++;
+            $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
+        } else {
+            $image = isset($product->images[0]) ? $product->images[0] : 'default-image.jpg';
+            $cart_items[] = [
+                'product_id' => $product_id,
+                'name' => $product->name,
+                'image' => $image,
+                'quantity' => 1,
+                'unit_amount' => $product->price,
+                'total_amount' => $product->price,
+            ];
+        }
+
+        self::addCartItemsToCookie($cart_items);
+        return count($cart_items);
+    }
+
+
+    // add item to cart with qty
+    static public function addItemToCartWithQty($product_id, $qty = 1){
         $cart_items = self::getCartItemsFromCookie();
         $existing_item = null;
 
@@ -20,18 +57,18 @@ class CartManagement {
         }
 
         if($existing_item !== null){
-            $cart_items[$existing_item]['quantity']++;
+            $cart_items[$existing_item]['quantity'] = $qty;
             $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
 
         }else{
             $product = Product::where('id', $product_id)->first('id', 'name', 'price', 'images');
-
+            $image = isset($product->images[0]) ? $product->images[0] : 'default-image.jpg';
             if($product) {
                 $cart_items[] = [
                     'product_id' => $product_id,
                     'name' => $product->name,
-                    'image' => $product->images[0],
-                    'quantity' => 1,
+                    'image' => $image,
+                    'quantity' => $qty,
                     'unit_amount' => $product->price,
                     'total_amount' => $product->price
                 ];
@@ -47,7 +84,7 @@ class CartManagement {
         $cart_items = self::getCartItemsFromCookie();
 
         foreach($cart_items as $key => $item){
-            if($item['product_id'] ==$product_id){
+            if($item['product_id'] == $product_id){
                 unset($cart_items[$key]);
             }
         }
