@@ -28,6 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            // ->brandLogo(asset('storage/brands/01J64FRXQY6WHM3VGPDPXHV7Y8.png'))
+            ->brandName('Evo Guru')
             ->colors([
                 'primary' => Color::Amber,
             ])
